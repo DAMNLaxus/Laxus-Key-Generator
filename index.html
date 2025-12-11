@@ -21,7 +21,7 @@
     .container {
       padding: 20px;
     }
-    select, button {
+    input, button {
       padding: 10px 15px;
       margin: 10px;
       font-size: 16px;
@@ -65,13 +65,8 @@
 <header>LAXUS INJECTOR</header>
 
 <div class="container">
-  <label for="time">Choose Key Duration:</label>
-  <select id="time">
-    <option value="1m">1 Minute</option>
-    <option value="1h">1 Hour</option>
-    <option value="1d">1 Day</option>
-    <option value="lifetime">Lifetime</option>
-  </select>
+  <label for="manualTime">Enter Duration (e.g., 1m, 2h, 3d, 999999999d):</label><br>
+  <input type="text" id="manualTime" placeholder="Type duration here">
   <button onclick="generateKey()">Generate Key</button>
 
   <div class="generated-keys" id="generatedKeys">
@@ -84,29 +79,25 @@
 
 <script>
 function generateKey() {
-    const type = document.getElementById("time").value;
-    const key = "KEY-" + Math.random().toString(36).substring(2,10).toUpperCase();
-
-    let expiryText = "";
-
-    if(type==="1m"){
-        expiryText = "Expires in 1 Minute";
-    } else if(type==="1h"){
-        expiryText = "Expires in 1 Hour";
-    } else if(type==="1d"){
-        expiryText = "Expires in 1 Day";
-    } else {
-        expiryText = "Lifetime Key";
+    const duration = document.getElementById("manualTime").value.trim();
+    if(duration === "") {
+        alert("Please enter a duration");
+        return;
     }
+
+    const key = "KEY-" + Math.random().toString(36).substring(2,10).toUpperCase();
 
     const keysList = document.getElementById("keysList");
     const keyDiv = document.createElement("div");
     keyDiv.className = "key-item";
-    keyDiv.textContent = key + " — " + expiryText;
+    keyDiv.textContent = key + " — " + duration;
     keysList.prepend(keyDiv);
 
     // Copy key to clipboard automatically
-    navigator.clipboard.writeText(key + "|" + expiryText);
+    navigator.clipboard.writeText(key + "|" + duration);
+
+    // Clear input for next key
+    document.getElementById("manualTime").value = "";
 }
 </script>
 
