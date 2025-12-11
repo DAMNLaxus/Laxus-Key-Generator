@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body style="font-family: Arial;text-align:center;margin-top:30px;">
+
+<h2>Key Generator</h2>
+
+<label>Choose Key Duration:</label><br><br>
+<select id="time">
+  <option value="1m">1 Minute</option>
+  <option value="1h">1 Hour</option>
+  <option value="1d">1 Day</option>
+  <option value="lifetime">Lifetime</option>
+</select>
+
+<br><br>
+<button onclick="generateKey()">Generate Key</button>
+
+<p id="result"></p>
+
+<script>
+function generateKey(){
+    const type = document.getElementById("time").value;
+    const key = "KEY-" + Math.random().toString(36).substring(2,10).toUpperCase();
+
+    let expiry = "";
+
+    if(type==="1m"){
+        expiry = Date.now() + (1 * 60 * 1000);
+    } else if(type==="1h"){
+        expiry = Date.now() + (60 * 60 * 1000);
+    } else if(type==="1d"){
+        expiry = Date.now() + (24 * 60 * 60 * 1000);
+    } else {
+        expiry = "lifetime";
+    }
+
+    // OUTPUT
+    document.getElementById("result").innerHTML = 
+      "Generated Key:<br><b>" + key + "</b><br><br>Expiry:<br>" + expiry;
+
+    // Copy to clipboard
+    navigator.clipboard.writeText(key + "|" + expiry);
+}
+</script>
+
+</body>
+</html>
