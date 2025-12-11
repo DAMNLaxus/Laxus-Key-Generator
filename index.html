@@ -1,45 +1,112 @@
 <!DOCTYPE html>
 <html>
-<body style="font-family: Arial;text-align:center;margin-top:30px;">
+<head>
+  <meta charset="UTF-8">
+  <title>Laxus Injector Keygen</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: linear-gradient(90deg, #ff4e50, #f9d423);
+      padding: 20px;
+      font-size: 28px;
+      font-weight: bold;
+    }
+    .container {
+      padding: 20px;
+    }
+    select, button {
+      padding: 10px 15px;
+      margin: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+    }
+    button {
+      background-color: #ff4e50;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #f9d423;
+      color: #000;
+    }
+    .generated-keys {
+      margin-top: 30px;
+      text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: #2c2c2c;
+      padding: 15px;
+      border-radius: 8px;
+      min-height: 150px;
+    }
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .key-item {
+      border-bottom: 1px solid #444;
+      padding: 5px 0;
+    }
+  </style>
+</head>
+<body>
 
-<h2>Key Generator</h2>
+<header>LAXUS INJECTOR</header>
 
-<label>Choose Key Duration:</label><br><br>
-<select id="time">
-  <option value="1m">1 Minute</option>
-  <option value="1h">1 Hour</option>
-  <option value="1d">1 Day</option>
-  <option value="lifetime">Lifetime</option>
-</select>
+<div class="container">
+  <label for="time">Choose Key Duration:</label>
+  <select id="time">
+    <option value="1m">1 Minute</option>
+    <option value="1h">1 Hour</option>
+    <option value="1d">1 Day</option>
+    <option value="lifetime">Lifetime</option>
+  </select>
+  <button onclick="generateKey()">Generate Key</button>
 
-<br><br>
-<button onclick="generateKey()">Generate Key</button>
+  <div class="generated-keys" id="generatedKeys">
+    <strong>GENERATED KEYS</strong>
+    <div id="keysList"></div>
+  </div>
+</div>
 
-<p id="result"></p>
+<footer>LAXUS INJECTOR</footer>
 
 <script>
-function generateKey(){
+function generateKey() {
     const type = document.getElementById("time").value;
     const key = "KEY-" + Math.random().toString(36).substring(2,10).toUpperCase();
 
-    let expiry = "";
+    let expiryText = "";
 
     if(type==="1m"){
-        expiry = Date.now() + (1 * 60 * 1000);
+        expiryText = "Expires in 1 Minute";
     } else if(type==="1h"){
-        expiry = Date.now() + (60 * 60 * 1000);
+        expiryText = "Expires in 1 Hour";
     } else if(type==="1d"){
-        expiry = Date.now() + (24 * 60 * 60 * 1000);
+        expiryText = "Expires in 1 Day";
     } else {
-        expiry = "lifetime";
+        expiryText = "Lifetime Key";
     }
 
-    // OUTPUT
-    document.getElementById("result").innerHTML = 
-      "Generated Key:<br><b>" + key + "</b><br><br>Expiry:<br>" + expiry;
+    const keysList = document.getElementById("keysList");
+    const keyDiv = document.createElement("div");
+    keyDiv.className = "key-item";
+    keyDiv.textContent = key + " — " + expiryText;
+    keysList.prepend(keyDiv);
 
-    // Copy to clipboard
-    navigator.clipboard.writeText(key + "|" + expiry);
+    // Copy key to clipboard automatically
+    navigator.clipboard.writeText(key + "|" + expiryText);
 }
 </script>
 
